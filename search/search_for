@@ -1,0 +1,41 @@
+#!/bin/bash
+
+function usage(){
+    echo "usage: search_for keyword [ directory ] [ logic ]"
+    echo "try search_for --help for more options"
+}
+
+function search(){
+    echo $1
+    # pass in command and argument for command, e.g. ls .
+    for f in $(ls $1)
+    do
+	# Check if grep will provide results; do not display results
+	if [ -f $1/$f ] && grep $2 $1/$f > /dev/null 
+	then
+	    # echo file name for successful match
+	    echo $f
+	    # echo successful match
+	    grep $2 $1/$f
+	fi
+    done
+    return 1
+}
+
+
+if [ $# -lt 1 ]
+then
+    
+    usage
+
+elif [ $# -eq 1 ]
+then
+
+    search . $1
+
+elif [ $# -eq 2 ]
+then
+    
+     search $1 $2
+
+fi
